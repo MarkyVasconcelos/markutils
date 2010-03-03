@@ -78,9 +78,10 @@ public class AnnotaddedBinder implements Binder {
 					if (JTextComponent.class.isAssignableFrom(f.getType()))
 						comps.add(new JTextComponentModifier((JTextComponent) f
 								.get(comp), resolver));
-					if (JCheckBox.class.isAssignableFrom(f.getType()))
+					if (JCheckBox.class.isAssignableFrom(f.getType())) {
 						comps.add(new JCheckBoxModifier(
 								(JCheckBox) f.get(comp), resolver));
+					}
 				}
 			}
 		} catch (Exception e) {
