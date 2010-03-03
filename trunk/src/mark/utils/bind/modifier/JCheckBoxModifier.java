@@ -21,5 +21,4 @@ public class JCheckBoxModifier extends ComponentModifier {
 	public void updateModel(Object obj) {
 		getResolver().setValue(obj, comp.isSelected());
 	}
-
 }

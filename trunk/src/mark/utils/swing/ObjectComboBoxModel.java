@@ -15,7 +15,7 @@ public class ObjectComboBoxModel<T> implements ComboBoxModel {
 	private List<T> data;
 	private T selectedItem;
 	private Formatter formatter;
-	private Map<String, T> map = new HashMap<String, T>();
+	private Map<Object, T> map = new HashMap<Object, T>();
 
 	public ObjectComboBoxModel() {
 		data = new ArrayList<T>();

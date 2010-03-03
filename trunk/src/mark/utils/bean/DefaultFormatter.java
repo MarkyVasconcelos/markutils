@@ -5,14 +5,14 @@ package mark.utils.bean;
  */
 public class DefaultFormatter implements Formatter {
 	@Override
-	public String format(Object obj) {
+	public Object format(Object obj) {
 		if (obj == null)
 			return "";
-		return obj.toString();
+		return obj;
 	}
 
 	@Override
-	public Object parse(String obj) {
+	public Object parse(Object obj) {
 		return obj;
 	}
 
