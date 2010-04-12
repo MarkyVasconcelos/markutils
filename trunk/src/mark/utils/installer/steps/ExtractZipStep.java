@@ -11,6 +11,7 @@ import java.util.zip.ZipInputStream;
 
 import mark.utils.installer.Step;
 
+@SuppressWarnings("all")
 public class ExtractZipStep implements Step {
 	private String zipFile;
 	private String dest;
@@ -36,7 +37,7 @@ public class ExtractZipStep implements Step {
 				byte[] result = new byte[100];
 				infl.inflate(result);
 				infl.end();
-				
+
 				in.closeEntry();
 			}
 

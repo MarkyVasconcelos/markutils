@@ -13,6 +13,7 @@ import mark.utils.bind.modifier.ComponentModifier;
 import mark.utils.bind.modifier.JCheckBoxModifier;
 import mark.utils.bind.modifier.JTextComponentModifier;
 import mark.utils.el.FieldResolver;
+import mark.utils.el.annotation.AnnotationResolver;
 import mark.utils.exc.ExceptionCollecter;
 
 /**
@@ -72,9 +73,15 @@ public class AnnotaddedBinder implements Binder {
 				if (f.isAnnotationPresent(Bindable.class)) {
 					f.setAccessible(true);
 					Bindable bind = f.getAnnotation(Bindable.class);
-					FieldResolver resolver = new FieldResolver(clazz, bind
-							.field(), bind.handler().newInstance());
-					resolver.setFormatter(bind.formatter().newInstance());
+					FieldResolver resolver = null;
+					if (bind.resolvable()) {
+						resolver = new AnnotationResolver(clazz)
+								.resolveSingle(bind.field());
+					} else {
+						resolver = new FieldResolver(clazz, bind.field(), bind
+								.handler().newInstance());
+						resolver.setFormatter(bind.formatter().newInstance());
+					}
 					if (JTextComponent.class.isAssignableFrom(f.getType()))
 						comps.add(new JTextComponentModifier((JTextComponent) f
 								.get(comp), resolver));

@@ -30,6 +30,8 @@ public class Expression {
 
 		for (int i = 0; i < expression.length(); i++) {
 			String s = expression.substring(i, i + 1);
+			if (s.equals(" "))
+				continue;
 			if (s.equals("(")) {
 				int opens = 0;
 				String sub = expression.substring(i);
