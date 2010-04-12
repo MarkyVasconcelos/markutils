@@ -5,11 +5,11 @@ package mark.utils.bean;
  *@author Marcos Vasconcelos
  */
 public class FormatterAdapter implements Formatter {
-	public String format(Object obj) {
+	public Object format(Object obj) {
 		return null;
 	};
 
-	public Object parse(String s) {
+	public Object parse(Object s) {
 		return null;
 	};
 

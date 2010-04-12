@@ -7,14 +7,15 @@ package mark.utils.bean;
  */
 public interface Formatter {
 	/**
-	 * Convert a object to String.
+	 * Format the object, should return String for most all uses.
 	 */
-	public abstract String format(Object obj);
+	public abstract Object format(Object obj);
 
 	/**
-	 * Convert the String to the Object.
+	 * Convert given object to this Object.
+	 * In most cases the object parameter is String
 	 */
-	public abstract Object parse(String s);
+	public abstract Object parse(Object s);
 
 	/**
 	 * Naming proposes only

@@ -18,4 +18,6 @@ public @interface Bindable {
 	Class<? extends FieldAccessHandler> handler() default FieldHandler.class;
 
 	Class<? extends Formatter> formatter() default DefaultFormatter.class;
+	
+	boolean resolvable() default false;
 }

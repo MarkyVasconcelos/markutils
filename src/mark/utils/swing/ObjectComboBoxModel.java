@@ -15,7 +15,7 @@ public class ObjectComboBoxModel<T> implements ComboBoxModel {
 	private List<T> data;
 	private T selectedItem;
 	private Formatter formatter;
-	private Map<String, T> map = new HashMap<String, T>();
+	private Map<Object, T> map = new HashMap<Object, T>();
 
 	public ObjectComboBoxModel() {
 		data = new ArrayList<T>();
@@ -30,6 +30,7 @@ public class ObjectComboBoxModel<T> implements ComboBoxModel {
 		}
 
 		this.formatter = formatter;
+		map.clear();
 		for (T t : data)
 			map.put(formatter.format(t), t);
 	}
@@ -63,6 +64,11 @@ public class ObjectComboBoxModel<T> implements ComboBoxModel {
 	@Override
 	public void setSelectedItem(Object arg0) {
 		selectedItem = map.get(arg0);
+		
+	}
+
+	public void setSelectedObject(T obj) {
+		selectedItem = obj;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package mark.utils.el.handler;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,14 +84,10 @@ public class MethodHandler implements FieldAccessHandler {
 
 	private void addField(String fieldName) {
 		Class<?> clazz = classesTrace.get(classesTrace.size() - 1);
-		try {
-			Field next = clazz.getDeclaredField(fieldName);
-			Method m = getGetterMethod(clazz, fieldName, next);
-			classesTrace.add(m.getReturnType());
-			getterTrace.add(m);
-		} catch (NoSuchFieldException e) {
-			throw new NotResolvableFieldException(fieldName, clazz);
-		}
+		// Field next = clazz.getDeclaredField(fieldName);
+		Method m = getGetterMethod(clazz, fieldName);
+		classesTrace.add(m.getReturnType());
+		getterTrace.add(m);
 	}
 
 	/**
@@ -116,25 +111,21 @@ public class MethodHandler implements FieldAccessHandler {
 	 *Search in the class and return the getter method for the given fieldName
 	 * If field is boolean the method search isFieldName if not the method
 	 * search getFieldName
-	 * 
 	 */
-	private Method getGetterMethod(Class<?> clazz, String fieldName, Field field) {
+	private Method getGetterMethod(Class<?> clazz, String fieldName) {
 		Method m = null;
 		try {
-			if (field == null) {
-				m = clazz.getMethod("get"
-						+ String.valueOf(fieldName.charAt(0)).toUpperCase()
-						+ fieldName.substring(1));
-			} else if (field.getType().isAssignableFrom(Boolean.class))
+			m = clazz.getMethod("get"
+					+ String.valueOf(fieldName.charAt(0)).toUpperCase()
+					+ fieldName.substring(1));
+		} catch (NoSuchMethodException e) {
+			try {
 				m = clazz.getMethod("is"
 						+ String.valueOf(fieldName.charAt(0)).toUpperCase()
 						+ fieldName.substring(1));
-			else
-				m = clazz.getMethod("get"
-						+ String.valueOf(fieldName.charAt(0)).toUpperCase()
-						+ fieldName.substring(1));
-		} catch (NoSuchMethodException e) {
-			throw NotResolvableFieldException.create(e, fieldName, clazz);
+			} catch (NoSuchMethodException ne) {
+				throw NotResolvableFieldException.create(e, fieldName, clazz);
+			}
 		}
 		return m;
 	}
