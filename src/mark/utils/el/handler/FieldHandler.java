@@ -66,7 +66,7 @@ public class FieldHandler implements FieldAccessHandler {
 				field = fields.get(fields.size() - 1);
 			} else
 				field = fields.get(0);
-			field.set(obj, formatter.parse(value));
+			field.set(obj, formatter.parse(value.toString()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -106,7 +106,7 @@ public class FieldHandler implements FieldAccessHandler {
 	public Field getField() {
 		return fields.get(fields.size() - 1);
 	}
-
+	
 	public Field getField(int idx) {
 		return fields.get(idx);
 	}
