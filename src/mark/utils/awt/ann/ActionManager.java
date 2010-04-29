@@ -18,7 +18,7 @@ public class ActionManager {
 	private Object comp;
 	private Class<?> clazz;
 
-	public ActionManager(Object comp) throws NoSuchMethodException {
+	public ActionManager(Object comp) {
 		clazz = comp.getClass();
 		this.comp = comp;
 		List<AnnotatedElement<Field, Action>> annotateds = new ClassIntrospector(
@@ -35,7 +35,11 @@ public class ActionManager {
 			String method = ann.getAnnotation().method();
 
 			if (listener.equals(ActionListener.class))
-				button.addActionListener(new MethodInvokerListener(method));
+				try {
+					button.addActionListener(new MethodInvokerListener(method));
+				} catch (NoSuchMethodException e1) {
+					throw new RuntimeException(e1);
+				}
 			else
 				try {
 					if ((listener.getModifiers() & Modifier.STATIC) != 0)
