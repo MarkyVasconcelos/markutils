@@ -8,8 +8,8 @@
 
 MarkUtils features:
   * Models:
-    # [ComboBoxModel]
-    # [ObjectTableModel]
+    * [ComboBoxModel]
+    * [ObjectTableModel]
   * [Binder]
 
 == Help Us ==
