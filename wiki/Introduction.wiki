@@ -1,6 +1,4 @@
-#summary One-sentence summary of this page.
 #labels Featured
-
 = Introduction =
 
 *MarkUtils* is a project to provide some facilities to the swing development.
