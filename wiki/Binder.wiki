@@ -1,0 +1,127 @@
+#summary Introduction
+#labels Featured
+
+= Introduction =
+
+Binder is a way to link an Object Class to an Form (JFrame, JInternalFrame, etc).
+Each change on the form makes the change at the object instance, see above the usage
+
+
+= Usage =
+
+For example, See the Person class
+{{{
+ public class Person{
+	private String name;
+	private int age;
+	private boolean live;
+	public void printAttrs() {
+		System.out.println("Name: " + getName());
+		System.out.println("Age: " + getAge());
+		System.out.println("Live?: " + isLive());
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public int getAge() {
+		return age;
+	}
+	public boolean isLive() {
+		return life;
+	}
+	public void setLive(boolean live) {
+		this.live = live;
+	}
+  }
+}}}
+
+Use the {{{@Form}}} annotion to indicate which class link with the form and the {{{@Bindable}}} annotation to indicate how the attribute linked to a form's field in this class.
+
+{{{@Bindable}}} parameters:
+  * String field: indicate the class attribute. (required parameter)
+  * Class handler: way to access the field (optional, FieldHandler is default)
+  * Class formatter: field formatter, when the field needs to be changed to the attribute, when isn't String (optional, DefaultFormatter is default)
+
+Now at the form.
+
+{{{
+import java.awt.GridLayout;
+import java.awt.event.*;
+import javax.swing.*;
+import mark.utils.bind.Binder;
+import mark.utils.bind.annotation.*;
+@Form(Person.class)
+public class PersonForm extends JFrame {
+	@Bindable(field = "name")
+	private JTextField name;
+	@Bindable(field = "age", formatter = IntFormatter.class)
+	private JTextField age;
+	@Bindable(field = "live")
+	// o Binder assumes for JCheckBox is an boolean attribute
+	private JCheckBox live;
+	private Binder binder;
+	public PersonForm() {
+		super("PersonForm");
+		name= new JTextField(20);
+		age = new JTextField(20);
+		live = new JCheckBox("Vivo?");
+		JButton add = new JButton("Add");
+		JButton load = new JButton("Load");
+		setLayout(new GridLayout(4, 2));
+		add(new JLabel("Name:"));
+		add(name);
+		add(new JLabel("Age:"));
+		add(age);
+		add(new JLabel());// For GridLayout
+		add(live);
+		add(add);
+		add(load);
+		load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Person person = new Person();
+				person.setName("Marky");
+				person.setAge(18);
+				person.setLive(true);
+				binder.updateView(person);
+			}
+		});
+		add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Person person = new Person();
+				binder.updateModel(person);
+				person.printAttrs();
+			}
+		});
+		pack();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		binder = new AnnotaddedBinder(this);
+	}
+	public static void main(String[] args) {
+		new PersonForm().setVisible(true);
+	}
+	// IntFormatter formats an string into a number
+	public static class IntFormatter implements mark.utils.bean.Formatter {
+		public Object format(Object obj) {
+			Integer d = (Integer) obj;
+			return d.toString();
+		}
+		public Object parse(Object obj) {
+			return Integer.valueOf(Integer.parseInt((String) obj));
+		}
+		public String getName() {
+			return "int";
+		}
+	}
+}
+}}}
+
+Runing this code, the screen shows the field and pressing the button {{{load}}} the object's information of the person object is showed in the fields. And the {{{add}}} buton updates the object attributes and print the attributes.
+
+To see this in Portuguese (Brasil) [http://markyameba.wordpress.com/2010/03/03/binder-2-0-agora-com-annotations/ see here]
