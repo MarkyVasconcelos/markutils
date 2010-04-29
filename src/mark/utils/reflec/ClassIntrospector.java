@@ -56,7 +56,7 @@ public class ClassIntrospector {
 
 		return list;
 	}
-
+	
 	public static class AnnotatedElement<T, K extends Annotation> {
 		private T comp;
 		private K annotation;

@@ -9,41 +9,40 @@ import java.util.Map;
 
 import javax.swing.AbstractButton;
 
-@Deprecated
-public class ActionManager implements ActionListener {
-	private List<Action> before, after;
-	private Map<AbstractButton, Action> map;
+public class ActionListenerManager implements ActionListener {
+	private List<ActionListener> before, after;
+	private Map<AbstractButton, ActionListener> map;
 
-	public ActionManager() {
-		map = new HashMap<AbstractButton, Action>();
-		before = new ArrayList<Action>();
-		after = new ArrayList<Action>();
+	public ActionListenerManager() {
+		map = new HashMap<AbstractButton, ActionListener>();
+		before = new ArrayList<ActionListener>();
+		after = new ArrayList<ActionListener>();
 	}
 
-	public void manage(AbstractButton source, Action action) {
+	public void manage(AbstractButton source, ActionListener action) {
 		map.put(source, action);
 		source.addActionListener(this);
 	}
 
-	public void doBefore(Action action) {
+	public void doBefore(ActionListener action) {
 		before.add(action);
 	}
 
-	public void doAfter(Action action) {
+	public void doAfter(ActionListener action) {
 		after.add(action);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		for (Action action : before)
-			action.doAction();
+		for (ActionListener action : before)
+			action.actionPerformed(arg0);
 		try {
-			map.get(arg0.getSource()).doAction();
+			map.get(arg0.getSource()).actionPerformed(arg0);
 		} catch (StopException e) {
 			e.getCause().printStackTrace();
 		}
-		for (Action act : after)
-			act.doAction();
+		for (ActionListener act : after)
+			act.actionPerformed(arg0);
 	}
 
 	public static class StopException extends RuntimeException {
