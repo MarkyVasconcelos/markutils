@@ -21,6 +21,20 @@ public class ActionManager {
 	public ActionManager(Object comp) {
 		clazz = comp.getClass();
 		this.comp = comp;
+		List<AnnotatedElement<Field, ActionSequence>> sequences = new ClassIntrospector(
+				clazz).getAnnotatedDeclaredFields(ActionSequence.class);
+		for (AnnotatedElement<Field, ActionSequence> ann : sequences) {
+			AbstractButton button;
+			try {
+				ann.getElement().setAccessible(true);
+				button = (AbstractButton) (JButton) ann.getElement().get(comp);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+			for (Action action : ann.getAnnotation().value())
+				resolve(button, action);
+		}
+
 		List<AnnotatedElement<Field, Action>> annotateds = new ClassIntrospector(
 				clazz).getAnnotatedDeclaredFields(Action.class);
 		for (AnnotatedElement<Field, Action> ann : annotateds) {
@@ -31,31 +45,36 @@ public class ActionManager {
 			} catch (IllegalAccessException e) {
 				throw new RuntimeException(e);
 			}
-			Class<?> listener = ann.getAnnotation().listener();
-			String method = ann.getAnnotation().method();
-
-			if (listener.equals(ActionListener.class))
-				try {
-					button.addActionListener(new MethodInvokerListener(method));
-				} catch (NoSuchMethodException e1) {
-					throw new RuntimeException(e1);
-				}
-			else
-				try {
-					if ((listener.getModifiers() & Modifier.STATIC) != 0)
-						button.addActionListener((ActionListener) listener
-								.newInstance());
-					else {
-						Constructor<?> constr = listener
-								.getDeclaredConstructor(clazz);
-						constr.setAccessible(true);
-						button.addActionListener((ActionListener) constr
-								.newInstance(comp));
-					}
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
+			Action action = ann.getAnnotation();
+			resolve(button, action);
 		}
+	}
+
+	private void resolve(AbstractButton button, Action action) {
+		Class<?> listener = action.listener();
+		String method = action.method();
+
+		if (listener.equals(ActionListener.class))
+			try {
+				button.addActionListener(new MethodInvokerListener(method));
+			} catch (NoSuchMethodException e1) {
+				throw new RuntimeException(e1);
+			}
+		else
+			try {
+				if ((listener.getModifiers() & Modifier.STATIC) != 0)
+					button.addActionListener((ActionListener) listener
+							.newInstance());
+				else {
+					Constructor<?> constr = listener
+							.getDeclaredConstructor(clazz);
+					constr.setAccessible(true);
+					button.addActionListener((ActionListener) constr
+							.newInstance(comp));
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 	}
 
 	private class MethodInvokerListener implements ActionListener {
