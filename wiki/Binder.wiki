@@ -9,7 +9,7 @@ Each change on the form makes the change at the object instance, see above the u
 
 = Usage =
 
-For example, See the Person class
+For example, see the Person class
 {{{
  public class Person{
 	private String name;
@@ -33,7 +33,7 @@ For example, See the Person class
 		return age;
 	}
 	public boolean isLive() {
-		return life;
+		return live;
 	}
 	public void setLive(boolean live) {
 		this.live = live;
@@ -41,12 +41,12 @@ For example, See the Person class
   }
 }}}
 
-Use the {{{@Form}}} annotion to indicate which class link with the form and the {{{@Bindable}}} annotation to indicate how the attribute linked to a form's field in this class.
+Use the {{{@Form}}} annotation to indicate which class the form should link and the {{{@Bindable}}} annotation to indicate wich attribute of the Form linked class should link this field.
 
 {{{@Bindable}}} parameters:
   * String field: indicate the class attribute. (required parameter)
   * Class handler: way to access the field (optional, FieldHandler is default)
-  * Class formatter: field formatter, when the field needs to be changed to the attribute, when isn't String (optional, DefaultFormatter is default)
+  * Class formatter: field formatter, when the field needs to be converted to the attribute, when isn't String (optional, DefaultFormatter is default)
 
 Now at the form.
 
@@ -122,6 +122,6 @@ public class PersonForm extends JFrame {
 }
 }}}
 
-Runing this code, the screen shows the field and pressing the button {{{load}}} the object's information of the person object is showed in the fields. And the {{{add}}} buton updates the object attributes and print the attributes.
+Running this code, the screen shows the field and pressing the button {{{load}}} the object's information of the person is showed in the fields. And the {{{add}}} button updates the object attributes and print the attributes.
 
 To see this in Portuguese (Brasil) [http://markyameba.wordpress.com/2010/03/03/binder-2-0-agora-com-annotations/ see here]
