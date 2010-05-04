@@ -1,0 +1,151 @@
+#summary Util classes for Configuration.
+#labels Phase-Implementation
+= Introduction =
+This classes should help in configuration like init ups of systems.
+
+There's two usefull classes in this package
+
+Configuration - This class read and write Strings from a file to store information.
+StringConfiguration - Just a better way to parse Strings while multiple configurations should be write in the same line.
+
+Ps: Configuration class has a method called getCfg(String key) wich return a StringConfiguration, and a get(String key) wich return a String.
+= Details =
+== Configuration class ==
+First, let's see the Configuration class.
+
+{{{
+import java.io.File;
+
+import mark.utils.cfg.Configuration;
+
+public class ConfigurationTest {
+	public static void main(String[] args) throws Throwable {
+		Configuration cfg = new Configuration(new File("C:/system.cfg"));//Extension can be anything, i use .cfg for convention.
+		cfg.put("default-layout", "x-swing");
+		cfg.put("user-dir", "root");
+		cfg.put("usefull-info", "something");
+		cfg.write();
+	}
+}
+}}}
+After running this code there's will be created a file(if not exists) with a result like that.
+
+usefull-info=something
+default-layout=x-swing
+user-dir=root
+
+If the file already exists, the new info should be added to this file or updated if necessary.
+
+Now, to read this info.
+
+{{{
+import java.io.File;
+
+import mark.utils.cfg.Configuration;
+
+public class ConfigurationTest {
+	public static void main(String[] args) throws Throwable {
+		Configuration cfg = new Configuration(new File("C:/system.cfg"));
+		System.out.println(cfg.get("default-layout"));
+		System.out.println(cfg.get("user-dir"));
+		System.out.println(cfg.get("usefull-info"));
+	}
+}
+}}}
+
+Wich should show a result like:
+x-swing
+root
+something
+
+== StringConfiguration class ==
+This class should represent a configuration in one line, like:
+
+{{{[h:50][w:70][name:60]}}}
+
+The syntax is:
+{{{[<key1>:<value1>][<key2>:<value2>][<keyN>:<valueN>]}}}
+
+The method getAttribute of the StringConfiguration class should return a String with the value of the parameter key.
+
+{{{
+import mark.utils.cfg.StringConfiguration;
+
+public class StringConfigurationTest {
+	public static void main(String[] args) {
+		StringConfiguration cfg = new StringConfiguration(
+				"[h:50][w:70][name:comp]");
+		System.out.println(cfg.getAttribute("h"));
+		System.out.println(cfg.getAttribute("w"));
+		System.out.println(cfg.getAttribute("name"));
+	}
+}
+}}}
+
+This code should print the following result:
+50
+70
+comp
+
+Like the Configuration class, you can add more values to a StringConfiguration, and the method toString returns a String with all the values.
+
+{{{
+import mark.utils.cfg.StringConfiguration;
+
+public class StringConfigurationTest {
+	public static void main(String[] args) {
+		StringConfiguration cfg = new StringConfiguration(
+				"[h:50][w:70][name:comp]");
+		cfg.setAttribute("max", "90");
+		System.out.println(cfg.toString());
+	}
+}
+}}}
+Prints:
+[w:70][max:90][name:comp][h:50]
+
+
+You can use both classes to config your system. Like:
+
+First, run this code to create the config file.
+{{{
+import java.io.File;
+
+import mark.utils.cfg.Configuration;
+
+public class ConfigurationTest {
+	public static void main(String[] args) throws Throwable {
+		Configuration cfg = new Configuration(new File("C:/system.cfg"));
+		cfg.put("default-layout", "x-swing");
+		cfg.put("user-dir", "root");
+		cfg.put("usefull-info", "something");
+		cfg.put("mdi", "[h:800][w:600]");
+		cfg.write();
+	}
+}
+}}}
+
+Now to read theses values.
+
+{{{
+import java.io.File;
+
+import mark.utils.cfg.Configuration;
+import mark.utils.cfg.StringConfiguration;
+
+public class ConfigurationTest {
+	public static void main(String[] args) throws Throwable {
+		Configuration cfg = new Configuration(new File("C:/system.cfg"));
+		System.out.println(cfg.get("default-layout"));
+		System.out.println(cfg.get("user-dir"));
+		System.out.println(cfg.get("usefull-info"));
+		StringConfiguration mdi = cfg.getCfg("mdi");
+		System.out.println(mdi.getAttribute("h"));
+		System.out.println(mdi.getAttribute("w"));
+	}
+}
+}}}
+
+Configuration class has a method put with accept the StringConfiguration as parameter too.
+
+And this make simple read and write init-ups configuration infos for a system.
