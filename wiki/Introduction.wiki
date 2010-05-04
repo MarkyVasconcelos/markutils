@@ -11,6 +11,7 @@ MarkUtils features:
     * [ComboBoxModel]
     * [ObjectTableModel]
   * [Binder]
+  * [ConfigurationUtils]
 
 == Help Us ==
   * See the [TODO]
