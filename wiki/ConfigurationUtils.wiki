@@ -1,13 +1,12 @@
 #summary Util classes for Configuration.
-#labels Phase-Implementation
+#labels Phase-Implementation,Featured
 = Introduction =
 This classes should help in configuration like init ups of systems.
 
 There's two usefull classes in this package
 
-Configuration - This class read and write Strings from a file to store information.
-
-StringConfiguration - Just a better way to parse Strings while multiple configurations should be write in the same line.
+Configuration: This class read and write Strings from a file to store information.
+StringConfiguration: Just a better way to parse Strings while multiple configurations should be write in he same line.
 
 Ps: Configuration class has a method called getCfg(String key) wich return a StringConfiguration, and a get(String key) wich return a String.
 = Details =
@@ -155,6 +154,7 @@ public class ConfigurationTest {
 }}}
 
 *Ps: Both classes do not grant the inserted order.
+
 Configuration class has a method put with accept the StringConfiguration as parameter too.
 
 And this make simple read and write init-ups configuration infos for a system.
