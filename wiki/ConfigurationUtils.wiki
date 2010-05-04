@@ -6,6 +6,7 @@ This classes should help in configuration like init ups of systems.
 There's two usefull classes in this package
 
 Configuration - This class read and write Strings from a file to store information.
+
 StringConfiguration - Just a better way to parse Strings while multiple configurations should be write in the same line.
 
 Ps: Configuration class has a method called getCfg(String key) wich return a StringConfiguration, and a get(String key) wich return a String.
@@ -30,9 +31,12 @@ public class ConfigurationTest {
 }}}
 After running this code there's will be created a file(if not exists) with a result like that.
 
+{{{
+#Tue May 04 09:53:01 GMT-03:00 2010
 usefull-info=something
 default-layout=x-swing
 user-dir=root
+}}}
 
 If the file already exists, the new info should be added to this file or updated if necessary.
 
@@ -54,9 +58,11 @@ public class ConfigurationTest {
 }}}
 
 Wich should show a result like:
+{{{
 x-swing
 root
 something
+}}}
 
 == StringConfiguration class ==
 This class should represent a configuration in one line, like:
@@ -83,9 +89,11 @@ public class StringConfigurationTest {
 }}}
 
 This code should print the following result:
+{{{
 50
 70
 comp
+}}}
 
 Like the Configuration class, you can add more values to a StringConfiguration, and the method toString returns a String with all the values.
 
@@ -102,7 +110,7 @@ public class StringConfigurationTest {
 }
 }}}
 Prints:
-[w:70][max:90][name:comp][h:50]
+{{{[w:70][max:90][name:comp][h:50]}}}
 
 
 You can use both classes to config your system. Like:
@@ -146,6 +154,7 @@ public class ConfigurationTest {
 }
 }}}
 
+*Ps: Both classes do not grant the inserted order.
 Configuration class has a method put with accept the StringConfiguration as parameter too.
 
 And this make simple read and write init-ups configuration infos for a system.
