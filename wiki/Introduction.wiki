@@ -12,6 +12,7 @@ MarkUtils features:
     * [ObjectTableModel]
   * [Binder]
   * [ConfigurationUtils]
+  * [ActionManager]
 
 == Help Us ==
   * See the [TODO]
