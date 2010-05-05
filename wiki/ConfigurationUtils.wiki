@@ -1,5 +1,5 @@
 #summary Util classes for Configuration.
-#labels Phase-Implementation,Featured
+#labels Phase-Implementation
 = Introduction =
 This classes should help in configuration like init ups of systems.
 
