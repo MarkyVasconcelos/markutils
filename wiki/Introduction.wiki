@@ -10,9 +10,10 @@ MarkUtils features:
   * Models:
     * [ComboBoxModel]
     * [ObjectTableModel]
-  * [Binder]
-  * [ConfigurationUtils]
-  * [ActionManager]
+  * [Binder] - Bind all the fields of a form to a object with annotations
+  * [ConfigurationUtils] - Just save the preferences
+  * [ActionManager] - Map JButton directly to methods
+  * [Expression] - Solve math formulas as Strings
 
 == Help Us ==
   * See the [TODO]
