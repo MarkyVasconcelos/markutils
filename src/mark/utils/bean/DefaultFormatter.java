@@ -6,8 +6,6 @@ package mark.utils.bean;
 public class DefaultFormatter implements Formatter {
 	@Override
 	public Object format(Object obj) {
-		if (obj == null)
-			return "";
 		return obj;
 	}
 
@@ -18,6 +16,6 @@ public class DefaultFormatter implements Formatter {
 
 	@Override
 	public String getName() {
-		return "string_basic";
+		return "obj_def";
 	}
 };

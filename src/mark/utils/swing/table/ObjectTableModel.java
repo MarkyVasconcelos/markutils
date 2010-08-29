@@ -139,4 +139,8 @@ public class ObjectTableModel<T> extends AbstractTableModel {
 	public FieldResolver getColumnResolver(int colIndex) {
 		return fields[colIndex];
 	}
+	
+	public Class<?> getColumnClass(int col){
+		return getColumnResolver(col).getFieldType();
+	}
 }
