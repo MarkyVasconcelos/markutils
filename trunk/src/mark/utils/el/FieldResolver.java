@@ -1,14 +1,17 @@
 package mark.utils.el;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import mark.utils.bean.DefaultFormatter;
 import mark.utils.bean.Formatter;
 import mark.utils.el.handler.FieldAccessHandler;
 import mark.utils.el.handler.FieldHandler;
 
 /**
- *The class to access the field value.
+ * The class to access the field value.
  * 
- *@author Marcos Vasconcelos
+ * @author Marcos Vasconcelos
  */
 public class FieldResolver {
 	private String fieldName;// The field Name.
@@ -94,7 +97,10 @@ public class FieldResolver {
 	}
 
 	public Class<?> getFieldType() {
-		return method.getFieldType();
+		Class<?> clazz = method.getFieldType();
+		if (clazz.isPrimitive())
+			return primitiveWrapers.get(clazz);
+		return clazz;
 	}
 
 	public String getFieldName() {
@@ -111,5 +117,18 @@ public class FieldResolver {
 
 	public Class<?> getTraceClassAt(int idx) {
 		return method.getTraceClassAt(idx);
+	}
+
+	private static final Map<Class<?>, Class<?>> primitiveWrapers;
+	static {
+		primitiveWrapers = new HashMap<Class<?>, Class<?>>();
+		primitiveWrapers.put(char.class, Character.class);
+		primitiveWrapers.put(byte.class, Byte.class);
+		primitiveWrapers.put(short.class, Short.class);
+		primitiveWrapers.put(int.class, Integer.class);
+		primitiveWrapers.put(long.class, Long.class);
+		primitiveWrapers.put(float.class, Float.class);
+		primitiveWrapers.put(double.class, Double.class);
+		primitiveWrapers.put(boolean.class, Boolean.class);
 	}
 }
