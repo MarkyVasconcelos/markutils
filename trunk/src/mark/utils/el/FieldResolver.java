@@ -7,6 +7,7 @@ import mark.utils.bean.DefaultFormatter;
 import mark.utils.bean.Formatter;
 import mark.utils.el.handler.FieldAccessHandler;
 import mark.utils.el.handler.FieldHandler;
+import mark.utils.reflec.ClassIntrospector;
 
 /**
  * The class to access the field value.
@@ -97,7 +98,14 @@ public class FieldResolver {
 	}
 
 	public Class<?> getFieldType() {
-		Class<?> clazz = method.getFieldType();
+		Class<?> clazz;
+		if (formatter instanceof DefaultFormatter)
+			clazz = method.getFieldType();
+		else {
+			ClassIntrospector instro = new ClassIntrospector(
+					formatter.getClass());
+			clazz = instro.getMethodReturnClass("format", Object.class);
+		}
 		if (clazz.isPrimitive())
 			return primitiveWrapers.get(clazz);
 		return clazz;
