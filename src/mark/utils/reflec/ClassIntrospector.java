@@ -57,6 +57,16 @@ public class ClassIntrospector {
 		return list;
 	}
 	
+
+	public Class<?> getMethodReturnClass(String string,Class<?> arg) {
+		try{
+			Method m = clazz.getDeclaredMethod(string, arg);
+			return m.getReturnType();
+		}catch (Exception e) {
+			return String.class;
+		}
+	}
+	
 	public static class AnnotatedElement<T, K extends Annotation> {
 		private T comp;
 		private K annotation;
@@ -74,4 +84,5 @@ public class ClassIntrospector {
 			return annotation;
 		}
 	}
+
 }

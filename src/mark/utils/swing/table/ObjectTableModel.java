@@ -57,7 +57,8 @@ public class ObjectTableModel<T> extends AbstractTableModel {
 	public Object getValueAt(int arg0, int arg1) {
 		try {
 			Object obj = data.get(arg0);
-			return fields[arg1].getValue(obj);
+			Object obj2 = fields[arg1].getValue(obj);
+			return obj2;
 		} catch (Exception e) {
 			return null;
 		}
@@ -135,7 +136,11 @@ public class ObjectTableModel<T> extends AbstractTableModel {
 	public int indexOf(T obj) {
 		return data.indexOf(obj);
 	}
-
+	
+	public boolean isEmpty(){
+		return data.isEmpty();
+	}
+	
 	public FieldResolver getColumnResolver(int colIndex) {
 		return fields[colIndex];
 	}
