@@ -8,7 +8,7 @@
 
 MarkUtils features:
   * Models:
-    * [ComboBoxModel]
+    * [ObjectComboBoxModel]
     * [ObjectTableModel]
   * [Binder] - Bind all the fields of a form to a object with annotations
   * [ConfigurationUtils] - Just save the preferences
@@ -16,5 +16,5 @@ MarkUtils features:
   * [Expression] - Solve math formulas as Strings
 
 == Help Us ==
-  * See the [TODO]
+  * See the [ToDoList]
   * Get the [http://code.google.com/p/markutils/source/checkout Source Code]
