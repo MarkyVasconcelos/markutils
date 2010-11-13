@@ -3,8 +3,11 @@ package mark.utils.collections;
 import java.util.ArrayList;
 import java.util.List;
 
+import mark.utils.collections.aggr.AggregateFunc;
 import mark.utils.collections.filter.Filter;
+import mark.utils.el.FieldResolver;
 
+@SuppressWarnings("unchecked")
 public class CollectionsUtil {
 	public static <T> List<T> filter(List<T> coll, Filter<T> filter) {
 		List<T> result = new ArrayList<T>();
@@ -39,6 +42,12 @@ public class CollectionsUtil {
 		return -1;
 	}
 
+	/**
+	 * @param <T>
+	 * @param obj
+	 * @param filter
+	 * @return
+	 */
 	public static <T> int lastIndexOf(T[] obj, Filter<T> filter) {
 		int i = obj.length;
 		int idx = -1;
@@ -48,6 +57,12 @@ public class CollectionsUtil {
 		return idx;
 	}
 
+	/**
+	 * @param <T>
+	 * @param list
+	 * @param filter
+	 * @return
+	 */
 	public static <T> Integer[] allMatchIndex(List<T> list, Filter<T> filter) {
 		Integer[] result = new Integer[list.size()];
 		int currentIdx = 0;
@@ -57,6 +72,13 @@ public class CollectionsUtil {
 		return (Integer[]) trim(result);
 	}
 
+	/**
+	 * 
+	 * Returns an array without null values.
+	 * 
+	 * @param obj
+	 * @return
+	 */
 	public static Object[] trim(Object[] obj) {
 		int nullIndex = -1;
 		for (int i = 0; i < obj.length; i++)
@@ -66,6 +88,56 @@ public class CollectionsUtil {
 		for (int i = 0; i < nullIndex; i++)
 			objs[i] = obj[i];
 		return objs;
+	}
+
+	/**
+	 * Apply an aggregate function over all itens in the collection.
+	 * 
+	 * @param <T>
+	 * @param func
+	 * @param l
+	 * @return
+	 */
+	public static <T> T aggregate(AggregateFunc<T> func, List<T> l) {
+		func.init();
+		for (T t : l)
+			func.update(t);
+		return func.getResult();
+	}
+
+	/**
+	 * Apply an aggregate function over all itens in the collection.
+	 * 
+	 * If the list ins't the object with the function should be applied, this
+	 * split the Object and apply in the result.
+	 * 
+	 * @param <T>
+	 * @param func
+	 * @param l
+	 * @param field
+	 * @return
+	 */
+	public static <T> T aggregate(AggregateFunc<T> func, List<?> l, String field) {
+		return aggregate(func, (List<T>) split(l, field));
+	}
+
+	/**
+	 * Returns a list with all values of a attribute of the object T.
+	 * 
+	 * @return
+	 */
+	public static <T> List<T> split(List<?> list, String fieldName) {
+		List<T> result = new ArrayList<T>();
+		if (list.isEmpty())
+			return result;
+
+		Class<?> clazz = list.get(0).getClass();
+		FieldResolver resolver = new FieldResolver(clazz, fieldName);
+
+		for (Object obj : list)
+			result.add((T) resolver.getValue(obj));
+
+		return result;
 	}
 
 }
