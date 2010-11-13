@@ -14,6 +14,9 @@ MarkUtils features:
   * [ConfigurationUtils] - Just save the preferences
   * [ActionManager] - Map JButton directly to methods
   * [Expression] - Solve math formulas as Strings
+  * Collections:
+    * [CollectionsUtil]
+    * [AggregateFunction]
 
 == Help Us ==
   * See the [ToDoList]
