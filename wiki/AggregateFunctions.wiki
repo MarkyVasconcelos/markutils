@@ -1,0 +1,96 @@
+#summary Apply functions over a collection.
+
+This class allow apply a function over all elements of a collection and get the result.
+Functions like, sum, avg or anything else, only depends the implementation of a  AggregateFunction.
+
+Too use this is easy.
+
+[sourcecode]
+List<Integer> list = new ArrayList<Integer>();
+list.add(10);
+list.add(20);
+list.add(30);
+list.add(40);
+list.add(50);
+
+Integer sum = CollectionsUtil.aggregate(new FuncSum(), list).intValue();//.intValue cause FuncSum returns Number
+Double avg = CollectionsUtil.aggregate(new FuncAvg(), list).doubleValue();
+System.out.println("sum = " + sum);
+System.out.println("avg = " + avg);
+[/sourcecode]
+
+The implementations FuncSum(Sum) and FuncAvg(Average) are already implementeds in the project, and there's a third one, FuncConcat with concat Strings.
+
+There's possible to apply the function over a collection different of the one with the AggregateFunc expects, to it, use the method.
+
+CollectionsUtil.aggregate(List<Object> l, AggregateFunc func, String field)
+
+
+And the result will be the function applyed over the list returned by  CollectionsUtil.split(l, field).
+
+
+About AggregateFunction, to create new implementations of functions, implements this class.
+
+And this assignature is:
+
+
+[sourcecode]
+package mark.utils.collections.aggr;
+
+/**
+ * Functions to work over an object, the object is of the type T
+ * 
+ * @author marcos.vasconcelos
+ */
+public interface AggregateFunc<T> {
+	/**
+	 * Init this Func with the initial values.
+	 * This method is called when a new Calculation over a Collection is going to ve initiated.
+	 * When implementing, reset all values to it initial value.
+	 */
+	public void init();
+	/**
+	 * Called over each value in a List.
+	 * This method should calculate the new value with a previous value.
+	 * @param obj
+	 */
+	public void update(T obj);
+	/**
+	 * Called when the iteration is over and the final value is done.
+	 * @return The value of the function apllied over all objects passed in Func.update
+	 */
+	public T getResult();
+}
+[/sourcecode]
+
+*The method 'init' is invoked before the iterations.
+*The method 'update' is invoked with each object of the collection.
+*The method 'getResult' is invoked after iterations, and should return the processed result.
+
+As example, this is the implementation of average.
+
+[sourcecode]
+package mark.utils.collections.aggr;
+
+public class FuncAvg implements AggregateFunc<Number>{
+	private Number x;
+	private int total;
+	@Override
+	public void update(Number obj) {
+		x = new Double(x.doubleValue() + obj.doubleValue());
+		total++;
+	}
+
+	@Override
+	public Number getResult() {
+		return x.doubleValue() / total;
+	}
+
+	@Override
+	public void init() {
+		x = new Double(0);
+		total = 0;
+	}
+	
+}
+[/sourcecode]
