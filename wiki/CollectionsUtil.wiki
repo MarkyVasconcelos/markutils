@@ -34,6 +34,6 @@ list.add(new Person("E", 50.0));
 List<Double> ages = CollectionsUtil.split(list, "age");
 }}}
 
-And 'ages' will have the elements [10.0,20.0,30.0,40.0,50.0].
+And 'ages' will have the elements {{{[10.0,20.0,30.0,40.0,50.0]}}}.
 
 Some others methods will be explained in time.
