@@ -49,8 +49,8 @@ public class Expression {
 	/**
 	 * Adds a variable and its value in the Expression
 	 */
-	public void addVariable(String v, double val) {
-		addVariable(v, new Double(val));
+	public void setVariable(String v, double val) {
+		variables.put(v, new Double(val));
 	}
 
 	/**
