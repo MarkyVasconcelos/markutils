@@ -16,7 +16,7 @@ MarkUtils features:
   * [Expression] - Solve math formulas as Strings
   * Collections:
     * [CollectionsUtil]
-    * [AggregateFunction]
+    * [AggregateFunctions]
 
 == Help Us ==
   * See the [ToDoList]
