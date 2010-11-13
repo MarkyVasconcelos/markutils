@@ -20,5 +20,14 @@ exp.setVariable("x", 3);
 double result = exp.resolve(); 
 }}}
 
+But, expressions can be more powerfull than it.
+In the new Expression class is possible to use functions like the ones of the Math class, and these are:
 
-Very simple, dont?
+cos, sin, tan, acos, asin, atan, sqrt, sqr, log, exp, floor, ceil, abs e neg
+
+To use, write on your expressions with functionName(value).
+
+Something like: cos(10)*tan(2*2)+log(1)
+
+And theres a special function 'rnd' with returns a random number.
+Eg. rnd(42), returns a value between 0 and 41.99
