@@ -5,7 +5,7 @@ Functions like, sum, avg or anything else, only depends the implementation of a 
 
 Too use this is easy.
 
-[sourcecode]
+{{{
 List<Integer> list = new ArrayList<Integer>();
 list.add(10);
 list.add(20);
@@ -17,13 +17,13 @@ Integer sum = CollectionsUtil.aggregate(new FuncSum(), list).intValue();//.intVa
 Double avg = CollectionsUtil.aggregate(new FuncAvg(), list).doubleValue();
 System.out.println("sum = " + sum);
 System.out.println("avg = " + avg);
-[/sourcecode]
+}}}
 
 The implementations FuncSum(Sum) and FuncAvg(Average) are already implementeds in the project, and there's a third one, FuncConcat with concat Strings.
 
 There's possible to apply the function over a collection different of the one with the AggregateFunc expects, to it, use the method.
 
-CollectionsUtil.aggregate(List<Object> l, AggregateFunc func, String field)
+CollectionsUtil.aggregate(List{{{<Object>}}} l, AggregateFunc func, String field)
 
 
 And the result will be the function applyed over the list returned by  CollectionsUtil.split(l, field).
@@ -34,7 +34,7 @@ About AggregateFunction, to create new implementations of functions, implements 
 And this assignature is:
 
 
-[sourcecode]
+{{{
 package mark.utils.collections.aggr;
 
 /**
@@ -61,15 +61,15 @@ public interface AggregateFunc<T> {
 	 */
 	public T getResult();
 }
-[/sourcecode]
+}}}
 
-*The method 'init' is invoked before the iterations.
-*The method 'update' is invoked with each object of the collection.
-*The method 'getResult' is invoked after iterations, and should return the processed result.
+  * The method 'init' is invoked before the iterations.
+  * The method 'update' is invoked with each object of the collection.
+  * The method 'getResult' is invoked after iterations, and should return the processed result.
 
 As example, this is the implementation of average.
 
-[sourcecode]
+{{{
 package mark.utils.collections.aggr;
 
 public class FuncAvg implements AggregateFunc<Number>{
@@ -93,4 +93,4 @@ public class FuncAvg implements AggregateFunc<Number>{
 	}
 	
 }
-[/sourcecode]
+}}}
