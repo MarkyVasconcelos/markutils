@@ -4,13 +4,13 @@ The class CollectionsUtil has some methods to use over collections.
 
 And these are:
 
-*split(List<T> l, String field)
+*split(List{{{<T>}}} l, String field)
 
 This method returns a List with the values of the attribute 'field' gettered from the object of the list 'l'.
 
 As example, with model Person.
 
-[sourcecode]
+{{{
 public class Person {
 	private String name;
 	private int age;
@@ -19,11 +19,11 @@ public class Person {
 		this.age = (int) d;
 	}
 }
-[/sourcecode]
+}}}
 
 If we have a list of Person and want a list with all ages, we do this:
 
-[sourcecode]
+{{{
 List<Person> list = new ArrayList<Person>();
 list.add(new Person("A", 10.0));
 list.add(new Person("B", 20.0));
@@ -32,7 +32,7 @@ list.add(new Person("D", 40.0));
 list.add(new Person("E", 50.0));
 
 List<Double> ages = CollectionsUtil.split(list, "age");
-[/sourcecode]
+}}}
 
 And 'ages' will have the elements [10.0,20.0,30.0,40.0,50.0].
 
