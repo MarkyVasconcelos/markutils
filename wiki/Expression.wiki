@@ -1,34 +1,4 @@
 #summary A way to resolve Math expressions as String in java.
 #labels Phase-Implementation
 
-= Introduction =
-
-In java, we don't have anything like the eval from JavaScript. So.. I created a way.
-
-To use is very simple.
-
-{{{
-Expression exp = new Expression("(15+5)*8+(5-6/(5+5))");  
-double result = exp.resolve(); 
-}}}
-
-And to make easier to parse string after instantiate the class you can set variables like:
-
-{{{
-Expression exp = new Expression("(x+x+x)*5");  
-exp.setVariable("x", 3);  
-double result = exp.resolve(); 
-}}}
-
-But, expressions can be more powerfull than it.
-In the new Expression class is possible to use functions like the ones of the Math class, and these are:
-
-cos, sin, tan, acos, asin, atan, sqrt, sqr, log, exp, floor, ceil, abs e neg
-
-To use, write on your expressions with functionName(value).
-
-Something like: {{{cos(10)*tan(2*2)+log(1)}}}
-
-And theres a special function 'rnd' with returns a random number.
-
-Eg. rnd(42), returns a value between 0 and 41.99
+This page was transfered to the new project Wiki: http://code.google.com/p/towel/wiki/Expression
