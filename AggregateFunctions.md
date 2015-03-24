@@ -1,0 +1,1 @@
+This page was transfered to the new project Wiki: http://code.google.com/p/towel/wiki/AggregateFunctions
